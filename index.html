@@ -7,11 +7,39 @@
 <style>
 body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;max-width:760px;margin:60px auto;padding:0 16px;line-height:1.6;color:#222}
 a{color:#0a66c2}
+.btn{display:inline-block;background:#111;color:#fff;border:0;border-radius:8px;padding:14px 22px;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none}
+.btn:hover{background:#333}
+.box{background:#f5f5f5;border-radius:10px;padding:20px;margin:24px 0}
 </style>
 </head>
 <body>
 <h1>HUNG ND Content Tool</h1>
 <p>A content management tool that helps creators schedule and publish their own videos to TikTok from one dashboard.</p>
+
+<div class="box">
+  <p><strong>Step 1.</strong> Connect your TikTok account.</p>
+  <button class="btn" id="login">Login with TikTok</button>
+  <p style="font-size:14px;color:#666;margin-top:12px">You will be asked to allow: basic profile info, upload videos as drafts, and post videos to your profile.</p>
+</div>
+
 <p><a href="terms.html">Terms of Service</a> · <a href="privacy.html">Privacy Policy</a></p>
+
+<script>
+const CLIENT_KEY = "sbawdd4mjqocfj2bil";
+const REDIRECT_URI = "https://hungnd3105-ux.github.io/tiktok-app/callback.html";
+const SCOPES = "user.info.basic,video.upload,video.publish";
+
+document.getElementById("login").onclick = function () {
+  const state = Math.random().toString(36).slice(2) + Date.now().toString(36);
+  try { sessionStorage.setItem("tt_state", state); } catch (e) {}
+  const url = "https://www.tiktok.com/v2/auth/authorize/"
+    + "?client_key=" + encodeURIComponent(CLIENT_KEY)
+    + "&scope=" + encodeURIComponent(SCOPES)
+    + "&response_type=code"
+    + "&redirect_uri=" + encodeURIComponent(REDIRECT_URI)
+    + "&state=" + encodeURIComponent(state);
+  window.location.href = url;
+};
+</script>
 </body>
 </html>
